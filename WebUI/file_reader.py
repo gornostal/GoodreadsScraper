@@ -25,15 +25,24 @@ def read_books_from_jl(file_path: str) -> List[RawBook]:
     return books
 
 
+def read_hidden_book_urls() -> set[str]:
+    file = "hidden_books.txt"
+    if not os.path.exists(file):
+        return set()
+
+    with open(file, "r") as f:
+        return set(f.read().splitlines())
+
+
 def read_books() -> List[Book]:
+    hidden = read_hidden_book_urls()
     books: List[Book] = []
+    seen_urls: set[str] = set()
+
     for file in get_al_jl_files():
-        books.extend(
-            [
-                b
-                for b in map(convert_rawbook_to_book, read_books_from_jl(file))
-                if b is not None
-            ]
-        )
+        for b in map(convert_rawbook_to_book, read_books_from_jl(file)):
+            if b is not None and b["url"] not in hidden and b["url"] not in seen_urls:
+                books.append(b)
+                seen_urls.add(b["url"])
 
     return books
