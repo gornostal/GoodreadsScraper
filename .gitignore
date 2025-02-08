@@ -11,3 +11,6 @@
 
 # Ignore virtualenv
 gscraper
+
+books.html
+.venv
