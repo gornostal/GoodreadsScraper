@@ -45,4 +45,5 @@ def read_books() -> List[Book]:
                 books.append(b)
                 seen_urls.add(b["url"])
 
+    print(f" Found {len(books)} books")
     return books
