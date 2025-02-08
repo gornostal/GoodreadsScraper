@@ -17,7 +17,7 @@
   <h1 class="text-center my-4">Found {{ books|length }} books</h1>
   <div class="container">
 
-    {% for book in books %}
+    {% for book in books[:max_results] %}
     <div class="row py-2">
       <div class="col-md-2">
         <a href="{{ book['url'] }}">

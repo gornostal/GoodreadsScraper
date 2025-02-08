@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from .file_reader import read_books
 
@@ -8,6 +8,7 @@ app = Flask(__name__)
 @app.route("/")
 def book_gallery():
     books = read_books()
+    max_results = request.args.get("max_results", default=100, type=int)
 
     books = [
         book
@@ -23,4 +24,4 @@ def book_gallery():
 
     books.sort(key=lambda x: x["fiveRatingsLeadingPercentage"], reverse=True)
 
-    return render_template("books.html", books=books[:100])
+    return render_template("books.html", books=books, max_results=max_results)
