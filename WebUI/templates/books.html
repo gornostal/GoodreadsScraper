@@ -93,7 +93,7 @@
           <p class="small">{{ book['description'] }}</p>
           <p>
             <strong>Year:</strong> {{ book['publishYear'] }} <br />
-            <strong>Author(s):</strong> {{ book['author']|join(', ') }} <br />
+            <strong>Author(s):</strong> {{ book['author']|join(', ') }} ✍ {{ book['booksByAuthor'] }}<br />
             <strong>Genres:</strong> {{ book['genres']|join(', ') }} <br />
             <strong>Rating:</strong> {{ '%.2f' % book['averageRating'] }} ({{
             '%.0f' % book['fiveRatingsLeadingPercentage'] }}%) <br />

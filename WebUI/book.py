@@ -32,6 +32,7 @@ class Book(TypedDict):
     series: Optional[List[str]]
     numberInSeries: int
     author: List[str]
+    booksByAuthor: int
     publishYear: int
     averageRating: float
     fiveRatingsLeadingPercentage: (
@@ -97,6 +98,7 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             series=raw_book.get("series"),
             numberInSeries=number_in_series,
             author=raw_book["author"],
+            booksByAuthor=0,  # this will be updated later
             publishYear=publishYear or 0,
             averageRating=average_rating,
             fiveRatingsLeadingPercentage=five_ratings_leading_percentage,

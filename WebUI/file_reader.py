@@ -2,6 +2,7 @@ import os
 import json
 from typing import List, cast
 
+from .author import enrich_book_attributes, process_authors
 from .book import Book, RawBook, convert_rawbook_to_book
 
 
@@ -41,9 +42,17 @@ def read_books() -> List[Book]:
 
     for file in get_al_jl_files():
         for b in map(convert_rawbook_to_book, read_books_from_jl(file)):
-            if b is not None and b["url"] not in hidden and b["url"] not in seen_urls:
+            if b is None or b["url"] in seen_urls:
+                continue
+
+            seen_urls.add(b["url"])
+            process_authors(b)
+
+            if b["url"] not in hidden:
                 books.append(b)
-                seen_urls.add(b["url"])
+
+    for book in books:
+        enrich_book_attributes(book)
 
     print(f" Found {len(books)} books")
     return books
