@@ -1,0 +1,126 @@
+{
+  "url": "https://www.goodreads.com/book/show/58613424-harry-potter-and-the-goblet-of-fire",
+  "title": "Harry Potter and the Goblet of Fire",
+  "titleComplete": "Harry Potter and the Goblet of Fire (Harry Potter, #4)",
+  "description": "Lord Voldemort, the dark wizard responsible for the deaths of Harry's parents, is growing stronger. At the Quidditch World Cup, Voldemort's signature Dark Mark appears in the sky over the stadium, causing pandemonium. The lightning-bolt-shaped scar on Harry's forehead is sporadically causing him agonizing pain, and he is also hearing disturbing voices. Harry realizes that all this is the result of a strong connection between himself and the Dark Lord, one that is putting him in grave danger. Back at Hogwarts, the students are getting ready for the upcoming Triwizard Tournament. Witches and wizards from two other schools are coming to Hogwarts for the year to compete in a series of grueling contests. The tournament is open only to students age 17 and above, but when someone secretly enters Harry's name, he is forced to compete. How can a 14-year-old possibly pass tests that might be fatal to an advanced wizard? And with the threat of Lord Voldemort looming, will he be able to focus on the tournament at all? For Harry, his friends, and everyone in the Wizarding world, the stakes are about to become much higher. This fourth installment, with a heart-pounding and emotional climax, serves as a turning point in the series, for the reader and for Harry himself.",
+  "imageUrl": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1627044952i/58613424.jpg",
+  "genres": [
+    "Childrens",
+    "Middle Grade",
+    "Adventure",
+    "Science Fiction Fantasy",
+    "Fiction",
+    "Fantasy",
+    "Classics",
+    "Young Adult",
+    "Magic",
+    "Audiobook"
+  ],
+  "asin": "B0DV2Y66LK",
+  "publisher": "Scholastic Inc.",
+  "series": ["Harry Potter"],
+  "author": ["J.K. Rowling", "Mary GrandPr\u00e9"],
+  "publishDate": 963039600000,
+  "characters": [
+    "Harry Potter",
+    "Hermione Granger",
+    "Albus Dumbledore",
+    "Rubeus Hagrid",
+    "Draco Malfoy",
+    "Cho Chang",
+    "Lord Voldemort",
+    "Sirius Black",
+    "Ludo Bagman",
+    "Sybil Trelawney",
+    "Bartemius Crouch",
+    "Alastor Moody",
+    "Charlie Weasley",
+    "Ron Weasley",
+    "Fleur Delacour",
+    "Cornelius Fudge",
+    "Viktor Krum",
+    "Cedric Diggory",
+    "Ginny Weasley",
+    "Bill Weasley",
+    "George Weasley",
+    "Rita Skeeter",
+    "Neville Longbottom",
+    "Arthur Weasley",
+    "Petunia Dursley",
+    "Bartemius Crouch, Jr.",
+    "Minerva McGonagall",
+    "Severus Snape",
+    "Molly Weasley",
+    "Fred Weasley",
+    "Bellatrix Lestrange",
+    "Dudley Dursley",
+    "Percy Weasley",
+    "Vernon Dursley"
+  ],
+  "places": [
+    "Scotland",
+    "Hogwarts School of Witchcraft and Wizardry",
+    "United Kingdom"
+  ],
+  "ratingHistogram": [22216, 40624, 274820, 955653, 2659974],
+  "ratingsCount": 3953287,
+  "reviewsCount": 76834,
+  "numPages": 752,
+  "language": "English",
+  "awards": [
+    {
+      "name": "Hugo Award",
+      "awardedAt": 978336000000,
+      "category": "Best Novel",
+      "hasWon": null
+    },
+    {
+      "name": "Mythopoeic Fantasy Award",
+      "awardedAt": 1199174400000,
+      "category": "Children's Literature",
+      "hasWon": null
+    },
+    {
+      "name": "Publieksprijs voor het Nederlandse Boek",
+      "awardedAt": 978336000000,
+      "category": null,
+      "hasWon": null
+    },
+    {
+      "name": "Audie Award",
+      "awardedAt": 978336000000,
+      "category": "Solo Narration - Male",
+      "hasWon": null
+    },
+    {
+      "name": "West Australian Young Readers' Book Award (WAYRBA)",
+      "awardedAt": 978336000000,
+      "category": "Younger Readers",
+      "hasWon": null
+    },
+    {
+      "name": "Golden Archer Award",
+      "awardedAt": 1009872000000,
+      "category": "Middle/Junior High",
+      "hasWon": null
+    },
+    {
+      "name": "Indian Paintbrush Book Award",
+      "awardedAt": 1009872000000,
+      "category": "",
+      "hasWon": null
+    },
+    {
+      "name": "Deutscher Buchpreis (German Book Prize)",
+      "awardedAt": null,
+      "category": "Publikumspreis",
+      "hasWon": null
+    },
+    {
+      "name": "Corine Internationaler Buchpreis",
+      "awardedAt": 978336000000,
+      "category": "Kinder- und Jugendbuch",
+      "hasWon": null
+    }
+  ]
+}

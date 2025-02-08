@@ -7,10 +7,8 @@
 # Ignore generated datasets
 *.jl
 *.csv
-*.json
 
 # Ignore virtualenv
 gscraper
 
-books.html
 .venv

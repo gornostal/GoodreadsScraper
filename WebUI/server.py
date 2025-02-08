@@ -1,8 +1,12 @@
-from Queries.file_reader import read_books
-from Queries.htmlview import generate_html_page
+from flask import Flask, render_template
+
+from .file_reader import read_books
+
+app = Flask(__name__)
 
 
-if __name__ == "__main__":
+@app.route("/")
+def book_gallery():
     books = read_books()
 
     books = [
@@ -19,4 +23,4 @@ if __name__ == "__main__":
 
     books.sort(key=lambda x: x["fiveRatingsLeadingPercentage"], reverse=True)
 
-    generate_html_page(books, max_books=100)
+    return render_template("books.html", books=books[:100])
