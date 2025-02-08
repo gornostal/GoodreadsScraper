@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 from typing import Optional, TypedDict, List
 
@@ -29,8 +30,9 @@ class Book(TypedDict):
     imageUrl: str
     genres: List[str]
     series: Optional[List[str]]
+    numberInSeries: int
     author: List[str]
-    publishYear: Optional[int]
+    publishYear: int
     averageRating: float
     fiveRatingsLeadingPercentage: (
         float  # difference between 5-star ratings and the next highest rating
@@ -49,20 +51,24 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
         publish_date = raw_book.get("publishDate")
         try:
             publishYear = (
-                datetime.fromtimestamp(publish_date / 1000).year if publish_date else None
+                datetime.fromtimestamp(publish_date / 1000).year
+                if publish_date
+                else None
             )
         except ValueError:
-            publishYear = None
+            publishYear = 0
 
         ratings_count = raw_book.get("ratingsCount", 0)
         ratings = raw_book.get("ratingHistogram", [0, 0, 0, 0, 0])
-        five_star_ratings = ratings[0]
-        next_highest_ratings = max(ratings[1:]) if len(ratings) > 1 else 0
-        five_ratings_leading_percentage = (
-            ((five_star_ratings - next_highest_ratings) / ratings_count) * 100
-            if ratings_count > 0
-            else 0
+        rating_percentage_histogram = [
+            (count / ratings_count) * 100 if ratings_count > 0 else 0
+            for count in ratings
+        ]
+        five_star_ratings = rating_percentage_histogram[-1]
+        next_highest_ratings = (
+            max(rating_percentage_histogram[1:-1]) if len(ratings) > 1 else 0
         )
+        five_ratings_leading_percentage = five_star_ratings - next_highest_ratings
 
         # calculate average rating with 1 decimal place
         average_rating = (
@@ -70,6 +76,13 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             if ratings_count > 0
             else 0
         )
+
+        # find numberInSeries by parsing the number following # character in the titleComplete
+        # for example "Kingdom of Ash (Throne of Glass, #7)" will have numberInSeries = 7
+        number_in_series = 0
+        if raw_book.get("titleComplete"):
+            result = re.search(r"#(\d+)\)", raw_book["titleComplete"])
+            number_in_series = int(result.group(1)) if result else 0
 
         # Create and return the Book object
         book = Book(
@@ -82,8 +95,9 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             ),
             genres=raw_book.get("genres", []),
             series=raw_book.get("series"),
+            numberInSeries=number_in_series,
             author=raw_book["author"],
-            publishYear=publishYear,
+            publishYear=publishYear or 0,
             averageRating=average_rating,
             fiveRatingsLeadingPercentage=five_ratings_leading_percentage,
             ratingsCount=ratings_count,
