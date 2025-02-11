@@ -56,5 +56,5 @@ class BookSpider(scrapy.Spider):
 
         yield loader.load_item()
 
-        author_url = response.css('a.ContributorLink::attr(href)').extract_first()
-        yield response.follow(author_url, callback=self.author_spider.parse)
+        # author_url = response.css('a.ContributorLink::attr(href)').extract_first()
+        # yield response.follow(author_url, callback=self.author_spider.parse)
