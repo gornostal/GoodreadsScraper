@@ -3,6 +3,11 @@ from datetime import datetime
 from typing import Optional, TypedDict, List
 
 
+class Award(TypedDict):
+    name: str
+    category: str
+
+
 class RawBook(TypedDict):
     url: str
     title: str
@@ -20,6 +25,7 @@ class RawBook(TypedDict):
     reviewsCount: Optional[int]
     numPages: Optional[int]
     language: str
+    awards: List[Award]
 
 
 class Book(TypedDict):
@@ -42,6 +48,7 @@ class Book(TypedDict):
     reviewsCount: Optional[int]
     numPages: Optional[int]
     language: str
+    awards: List[str]
 
 
 def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
@@ -85,6 +92,15 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             result = re.search(r"#(\d+)\)", raw_book["titleComplete"])
             number_in_series = int(result.group(1)) if result else 0
 
+        awards = list(
+            map(
+                lambda a: (
+                    f"{a['name']} - {a['category']}" if a["category"] else a["name"]
+                ),
+                raw_book.get("awards", []),
+            )
+        )
+
         # Create and return the Book object
         book = Book(
             url=raw_book["url"],
@@ -106,6 +122,7 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             reviewsCount=raw_book.get("reviewsCount"),
             numPages=raw_book.get("numPages"),
             language=raw_book.get("language"),
+            awards=awards,
         )
 
         return book

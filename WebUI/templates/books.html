@@ -98,7 +98,10 @@
             <strong>Rating:</strong> {{ '%.2f' % book['averageRating'] }} ({{
             '%.0f' % book['fiveRatingsLeadingPercentage'] }}%) <br />
             <strong>Number of Ratings:</strong> {{ book['ratingsCount'] / 1000 |
-            round if book['ratingsCount'] > 1000 else '< 1K' }}K
+            round if book['ratingsCount'] > 1000 else '< 1K' }}K <br />
+            {% if book['awards'] %}
+              🏆: <span class="small">{{ ', '.join(book['awards']) }}</span>
+            {% endif %}
           </p>
         </div>
       </div>
