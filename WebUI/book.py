@@ -92,6 +92,11 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             result = re.search(r"#(\d+)\)", raw_book["titleComplete"])
             number_in_series = int(result.group(1)) if result else 0
 
+        genres = [
+            g if "Non Fiction" not in g else "Nonfiction"
+            for g in raw_book.get("genres", [])
+        ]
+
         awards = list(
             map(
                 lambda a: (
@@ -110,7 +115,7 @@ def convert_rawbook_to_book(raw_book: RawBook) -> Book | None:
             imageUrl=raw_book.get(
                 "imageUrl", "https://placehold.co/400x600?text=No+image"
             ),
-            genres=raw_book.get("genres", []),
+            genres=genres,
             series=raw_book.get("series"),
             numberInSeries=number_in_series,
             author=raw_book["author"],
