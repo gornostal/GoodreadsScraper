@@ -120,6 +120,66 @@ def author(ctx, output_file_suffix='all'):
 
 
 @crawl.command()
+@click.option("--shelf_name",
+              required=True,
+              help="Goodreads shelf name, from /shelf/show/<shelf_name>.",
+              prompt=True,
+              type=str)
+@click.option("--start_page", help="Start page number", default=1, type=int)
+@click.option("--end_page",
+              required=True,
+              help="End page number",
+              prompt=True,
+              type=int)
+@click.option("--output_file_suffix",
+              help="The suffix for the output file. [default: shelf name]",
+              type=str)
+@click.pass_context
+def shelf(ctx, shelf_name: str, start_page: int, end_page: int,
+          output_file_suffix: str):
+    """Crawl a Goodreads public shelf.
+
+    Crawl all pages between start_page and end_page (inclusive) of a Goodreads shelf.
+
+    \b
+    The shelf name can be determined from the URL of the shelf.
+    For e.g. the name of the shelf https://www.goodreads.com/shelf/show/suspense is 'suspense'
+
+    \b
+    By default, two files will be created:
+      1.   book_{output_file_suffix}.jl, for books from the given shelf
+      2.   author_{output_file_suffix}.jl, for authors of the above books from the given shelf
+    """
+    if not output_file_suffix:
+        output_file_suffix = shelf_name
+    click.echo(
+        f"Crawling Goodreads shelf '{shelf_name}' for pages [{start_page}, {end_page}]"
+    )
+
+    # On Goodreads, each page of a shelf has about 20 books
+    books_per_page = 20
+    estimated_no_of_books = (end_page - start_page + 1) * books_per_page
+
+    progress_updater = ProgressUpdater()
+
+    with progress_updater.progress:
+        progress_updater.add_task_for(BookItem,
+                                      description="[red]Scraping books...",
+                                      total=estimated_no_of_books)
+        progress_updater.add_task_for(AuthorItem,
+                                      description="[green]Scraping authors...",
+                                      total=estimated_no_of_books)
+
+        _crawl('shelf',
+               ctx.obj["LOG_FILE"],
+               output_file_suffix,
+               shelf_name=shelf_name,
+               start_page_no=start_page,
+               end_page_no=end_page,
+               item_scraped_callback=progress_updater)
+
+
+@crawl.command()
 @click.option(
     "--user_id",
     required=True,
