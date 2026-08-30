@@ -1,8 +1,31 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, Response, jsonify, render_template, request
 
 from .file_reader import read_books
 
+try:
+    # Optional, gitignored module holding personal filters (see WebUI/filters.py).
+    from .filters import filter_books
+except ImportError:
+
+    def filter_books(books):
+        return books
+
+
 app = Flask(__name__)
+
+
+# "plain/text" is a common typo for "text/plain" - honour both.
+PLAIN_TEXT_MIMETYPES = ("text/plain", "plain/text")
+
+
+def wants_plain_text():
+    """Return True when the client explicitly prefers plain text over HTML."""
+    accept = request.accept_mimetypes
+    quality = max(
+        (q for mime, q in accept if mime.lower() in PLAIN_TEXT_MIMETYPES), default=0
+    )
+    # A wildcard "*/*" (curl's default) is not an explicit preference: keep HTML.
+    return quality > 0 and quality >= accept["text/html"]
 
 
 @app.route("/")
@@ -10,19 +33,14 @@ def book_gallery():
     books = read_books()
     max_results = request.args.get("max_results", default=100, type=int)
 
-    books = [
-        book
-        for book in books
-        if book["averageRating"] >= 3.8
-        and book["fiveRatingsLeadingPercentage"] >= -5
-        and book["publishYear"] >= 2017
-        and book["ratingsCount"] >= 100_000
-        and book["numberInSeries"] < 2
-        and (book.get("language") or "").lower() == "english"
-        and "Science Fiction" in " ".join(book["genres"])
-    ]
-
+    books = filter_books(books)
     books.sort(key=lambda x: x["fiveRatingsLeadingPercentage"], reverse=True)
+
+    if wants_plain_text():
+        return Response(
+            render_template("books_text.txt", books=books, max_results=max_results),
+            mimetype="text/plain",
+        )
 
     return render_template("books.html", books=books, max_results=max_results)
 

@@ -1,0 +1,2 @@
+{% for book in books[:max_results] %}{{ book['title'] }} - {{ book['author']|join(', ') }} - {{ book['url'] }}
+{% endfor %}

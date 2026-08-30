@@ -13,3 +13,4 @@ gscraper
 
 .venv
 hidden_books.txt
+WebUI/filters.py
