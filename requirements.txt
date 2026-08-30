@@ -4,3 +4,6 @@ scrapy
 yapf
 rich
 Flask
+requests
+beautifulsoup4
+lxml
